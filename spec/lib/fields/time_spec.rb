@@ -43,7 +43,8 @@ describe Administrate::Field::Time do
       formats = {
         time: {
           am: "午前",
-          pm: "午後"
+          pm: "午後",
+          formats: {administrate_time_default: "%I:%M%p"}
         }
       }
 
@@ -63,7 +64,7 @@ describe Administrate::Field::Time do
 
       I18n.with_locale(:ja) do
         with_translations(:ja, formats) do
-          expect(field.time).to eq("Translation missing: ja.time.pm")
+          expect { field.time }.to raise_error(I18n::MissingTranslationData, "Translation missing: ja.time.formats.administrate_time_default")
         end
       end
     end
