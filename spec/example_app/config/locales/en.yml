@@ -23,3 +23,16 @@ en:
 
   titles:
     application: Administrate-prototype
+
+  activerecord:
+    models:
+      customer: Customer
+      order: Orders
+      page: page
+      product: products
+      log_entry: Log Entry
+      product_meta_tag: Product Meta Tags
+      blog_post: blog post
+      blog_tag: blog tags
+      series: _series
+      stats: _stats
