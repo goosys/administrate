@@ -1,6 +1,7 @@
 module Admin
   class StatsController < Admin::ApplicationController
     before_action :with_variant, only: %i[index]
+    before_action :skip_policy_scope, only: %i[index]
 
     def index
       @stats = {

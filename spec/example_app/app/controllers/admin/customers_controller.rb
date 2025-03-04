@@ -1,6 +1,7 @@
 module Admin
   class CustomersController < Admin::ApplicationController
     before_action :with_variant, only: %i[index]
+    before_action :skip_authorization, only: %i[become]
 
     def become
       user_id = params[:id]

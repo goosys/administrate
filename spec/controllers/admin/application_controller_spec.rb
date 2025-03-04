@@ -149,6 +149,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
       allow(controller).to receive(:scoped_resource).with(no_args).and_call_original
       allow(controller).to receive(:authorize_resource).and_call_original
       allow(controller).to receive(:contextualize_resource).and_call_original
+      allow(controller).to receive(:authorize_action!).and_call_original
       allow(controller).to receive(:after_resource_destroyed_path).with(any_args).and_return(controller.controller_path)
     end
 
@@ -160,6 +161,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         expect(controller).to have_received(:scoped_resource)
         expect(controller).not_to have_received(:authorize_resource)
         expect(controller).not_to have_received(:contextualize_resource)
+        expect(controller).to have_received(:authorize_action!)
       end
     end
 
@@ -171,6 +173,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         expect(controller).not_to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
+        expect(controller).to have_received(:authorize_action!)
       end
     end
 
@@ -183,6 +186,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         expect(controller).not_to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
+        expect(controller).to have_received(:authorize_action!)
       end
     end
 
@@ -195,6 +199,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
+        expect(controller).to have_received(:authorize_action!)
       end
     end
 
@@ -207,6 +212,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
+        expect(controller).to have_received(:authorize_action!)
       end
     end
 
@@ -219,6 +225,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
+        expect(controller).to have_received(:authorize_action!)
       end
     end
 
@@ -231,6 +238,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
+        expect(controller).to have_received(:authorize_action!)
       end
     end
   end

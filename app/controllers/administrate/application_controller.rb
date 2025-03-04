@@ -9,6 +9,7 @@ module Administrate
       resources = apply_collection_includes(resources)
       resources = order.apply(resources)
       resources = paginate_resources(resources)
+      authorize_action!(resources)
       page = Administrate::Page::Collection.new(dashboard, order: order)
       page.context = self
 
@@ -21,6 +22,7 @@ module Administrate
     end
 
     def show
+      authorize_action!(requested_resource)
       page = Administrate::Page::Show.new(dashboard, requested_resource)
       page.context = self
       render locals: {
@@ -33,6 +35,7 @@ module Administrate
         authorize_resource(resource)
         contextualize_resource(resource)
       end
+      authorize_action!(resource)
 
       page = Administrate::Page::Form.new(dashboard, resource)
       page.context = self
@@ -42,6 +45,7 @@ module Administrate
     end
 
     def edit
+      authorize_action!(requested_resource)
       page = Administrate::Page::Form.new(dashboard, requested_resource)
       page.context = self
       render locals: {
@@ -54,6 +58,7 @@ module Administrate
         authorize_resource(resource)
         contextualize_resource(resource)
       end
+      authorize_action!(resource)
 
       if resource.save(context: validation_contexts_on_create(resource))
         yield(resource) if block_given?
@@ -71,6 +76,7 @@ module Administrate
     end
 
     def update
+      authorize_action!(requested_resource)
       requested_resource.assign_attributes(resource_params)
 
       if requested_resource.save(context: validation_contexts_on_update(requested_resource))
@@ -89,6 +95,7 @@ module Administrate
     end
 
     def destroy
+      authorize_action!(requested_resource)
       if requested_resource.destroy
         flash[:notice] = translate_with_resource("destroy.success")
       else
@@ -320,11 +327,19 @@ module Administrate
     #
     # @param resource [ActiveRecord::Base]
     # @return [ActiveRecord::Base]
-    # @raise [Administrate::NotAuthorizedError] if the resource is not authorized.
     def authorize_resource(resource)
-      if authorized_action?(resource, action_name)
-        resource
-      else
+      resource
+    end
+
+    # Raises an exception if the current user is not authorized to perform the
+    # named action on the resource.
+    #
+    # @param resource [ActiveRecord::Base, Class, String, Symbol]
+    # @param action_name [String, Symbol]
+    # @return nothing
+    # @raise [Administrate::NotAuthorizedError]
+    def authorize_action!(resource, action_name = self.action_name)
+      unless authorized_action?(resource, action_name)
         raise Administrate::NotAuthorizedError.new(
           action: action_name,
           resource: resource

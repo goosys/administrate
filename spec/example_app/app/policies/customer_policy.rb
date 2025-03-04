@@ -8,4 +8,8 @@ class CustomerPolicy < ApplicationPolicy
       end
     end
   end
+
+  def become?
+    true
+  end
 end

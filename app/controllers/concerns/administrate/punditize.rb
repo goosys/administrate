@@ -5,6 +5,10 @@ module Administrate
 
       if Pundit.const_defined?(:Authorization)
         include Pundit::Authorization
+        included do
+          after_action :verify_authorized, except: :index
+          after_action :verify_policy_scoped, only: :index
+        end
       else
         include Pundit
       end
@@ -32,6 +36,7 @@ module Administrate
       end
 
       def policy_scope!(user, scope)
+        @_pundit_policy_scoped = true
         policy_scope_class = Pundit::PolicyFinder.new(scope).scope!
 
         begin
