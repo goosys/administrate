@@ -12,6 +12,7 @@ module Administrate
 
       def attributes(action = nil)
         attributes = dashboard.form_attributes(action)
+        read_only_attributes = dashboard.class.const_defined?(:READ_ONLY_ATTRIBUTES) ? dashboard.class.const_get(:READ_ONLY_ATTRIBUTES) : []
 
         if attributes.is_a? Array
           attributes = {"" => attributes}
@@ -19,7 +20,7 @@ module Administrate
 
         attributes.transform_values do |attrs|
           attrs.map do |attribute|
-            attribute_field(dashboard, resource, attribute, :form)
+            attribute_field(dashboard, resource, attribute, (read_only_attributes.include?(attribute) ? :show : :form))
           end
         end
       end

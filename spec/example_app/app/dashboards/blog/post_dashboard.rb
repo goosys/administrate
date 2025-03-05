@@ -4,12 +4,12 @@ module Blog
   class PostDashboard < Administrate::BaseDashboard
     ATTRIBUTE_TYPES = {
       id: Field::Number,
-      created_at: Field::DateTime,
-      updated_at: Field::DateTime,
       title: Field::String,
-      published_at: Field::DateTime,
       body: Field::Text,
-      tags: Field::HasMany
+      tags: Field::HasMany,
+      published_at: Field::DateTime,
+      created_at: Field::DateTime,
+      updated_at: Field::DateTime
     }
 
     READ_ONLY_ATTRIBUTES = [
@@ -25,7 +25,7 @@ module Blog
       :published_at
     ]
 
-    FORM_ATTRIBUTES = ATTRIBUTE_TYPES.keys - READ_ONLY_ATTRIBUTES
+    FORM_ATTRIBUTES = ATTRIBUTE_TYPES.keys
     SHOW_PAGE_ATTRIBUTES = ATTRIBUTE_TYPES.keys
 
     def display_resource(resource)
