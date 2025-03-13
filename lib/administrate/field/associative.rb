@@ -52,8 +52,19 @@ module Administrate
 
       private
 
+      def associated_dashboard_class
+        case klass = options.fetch(:associated_dashboard_class, nil)
+          when String, Symbol
+            klass.constantize.new
+          when -> k { k.is_a?(Class) && k < ::Administrate::BaseDashboard }
+            klass.new
+          else
+            nil
+        end
+      end
+
       def associated_dashboard
-        "#{associated_class_name}Dashboard".constantize.new
+        associated_dashboard_class || "#{associated_class_name}Dashboard".constantize.new
       end
 
       def primary_key
