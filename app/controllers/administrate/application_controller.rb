@@ -11,11 +11,16 @@ module Administrate
       resources = paginate_resources(resources)
       page = Administrate::Page::Collection.new(dashboard, order: order)
 
+      # wip: usage
+      page.views[:search_bar] = Administrate::View::SearchBar.new(
+        dashboard: dashboard,
+        search_term: search_term,
+        resource_name: page.resource_name
+      )
+
       render locals: {
         resources: resources,
-        search_term: search_term,
-        page: page,
-        show_search_bar: show_search_bar?
+        page: page
       }
     end
 
@@ -241,12 +246,6 @@ module Administrate
         "administrate.controller.#{key}",
         resource: resource_resolver.resource_title
       )
-    end
-
-    def show_search_bar?
-      dashboard.attribute_types_for(
-        dashboard.all_attributes
-      ).any? { |_name, attribute| attribute.searchable? }
     end
 
     # Whether the current user is authorized to perform the named action on the

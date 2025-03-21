@@ -4,6 +4,7 @@ module Administrate
       def initialize(dashboard, options = {})
         @dashboard = dashboard
         @options = options
+        @views = {}
       end
 
       def resource_name
@@ -26,6 +27,8 @@ module Administrate
       def item_associations
         dashboard.try(:item_associations) || []
       end
+
+      attr_accessor :views
 
       private
 

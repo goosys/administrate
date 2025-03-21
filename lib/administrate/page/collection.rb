@@ -28,6 +28,8 @@ module Administrate
         {key => order.order_params_for(attr)}
       end
 
+      attr_accessor :search_component
+
       private
 
       def order

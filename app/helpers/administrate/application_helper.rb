@@ -85,12 +85,6 @@ module Administrate
       params.permit(:search, :id, :_page, :per_page, association_params)
     end
 
-    def clear_search_params
-      params.except(:search, :_page).permit(
-        :per_page, resource_name => %i[order direction]
-      )
-    end
-
     private
 
     def default_resource_name(name, opts = {})

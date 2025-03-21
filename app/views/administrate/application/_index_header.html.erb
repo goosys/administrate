@@ -9,13 +9,7 @@
 
   <%= content_for(:header_middle) %>
 
-  <% if show_search_bar %>
-    <%= render(
-      "search",
-      search_term: search_term,
-      resource_name: display_resource_name(page.resource_name)
-    ) %>
-  <% end %>
+  <%= render page.views[:search_bar] %>
 
   <div>
     <%= link_to(

@@ -9,6 +9,9 @@ require "administrate/order"
 require "administrate/resource_resolver"
 require "administrate/search"
 require "administrate/namespace"
+require "administrate/view"
+require "administrate/view/base"
+require "administrate/view/search_bar"
 
 module Administrate
   class Engine < ::Rails::Engine
