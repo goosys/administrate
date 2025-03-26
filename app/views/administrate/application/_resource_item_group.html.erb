@@ -1,0 +1,16 @@
+<% title = resource_item_group.first %>
+<% attributes = resource_item_group.second %>
+
+<fieldset class="<%= "field-unit--nested" if title.present? %>">
+<% if title.present? %>
+  <legend><%= t "helpers.label.#{page.resource_name}.#{title}", default: title %></legend>
+<% end %>
+
+<%= render(
+  partial: 'resource_item',
+  layout: 'resource_item_unit',
+  collection: attributes,
+  as: :attribute,
+  locals: local_assigns
+) %>
+</fieldset>
