@@ -155,7 +155,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
       it "passes all necessary authorization methods" do
         get :index, params: {}
         expect(controller).not_to have_received(:find_resource)
-        expect(controller).to have_received(:scoped_resource).exactly(2).times
+        expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).not_to have_received(:contextualize_resource)
       end

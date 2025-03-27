@@ -11,7 +11,7 @@ module Administrate
       resources = paginate_resources(resources)
       page = Administrate::Page::Collection.new(dashboard, order: order)
       page.context = self
-      filters = Administrate::Search.new(scoped_resource, dashboard, search_term).valid_filters
+      filters = Administrate::Search.new([], dashboard, "").valid_filters
 
       render locals: {
         resources: resources,
