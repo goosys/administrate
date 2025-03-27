@@ -9,6 +9,7 @@ module Administrate
       resources = apply_collection_includes(resources)
       resources = order.apply(resources)
       resources = paginate_resources(resources)
+      @resources = resources
       page = Administrate::Page::Collection.new(dashboard, order: order)
       page.context = self
       filters = Administrate::Search.new([], dashboard, "").valid_filters
@@ -31,7 +32,7 @@ module Administrate
     end
 
     def new
-      resource = new_resource.tap do |resource|
+      @built_resource = resource = new_resource.tap do |resource|
         authorize_resource(resource)
         contextualize_resource(resource)
       end
@@ -52,7 +53,7 @@ module Administrate
     end
 
     def create
-      resource = new_resource(resource_params).tap do |resource|
+      @built_resource = resource = new_resource(resource_params).tap do |resource|
         authorize_resource(resource)
         contextualize_resource(resource)
       end
