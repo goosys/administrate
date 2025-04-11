@@ -145,7 +145,6 @@ RSpec.describe Admin::ApplicationController, type: :controller do
 
     before do
       allow(controller).to receive(:find_resource).and_call_original
-      allow(controller).to receive(:authorize_scope).and_call_original
       allow(controller).to receive(:scoped_resource).with(no_args).and_call_original
       allow(controller).to receive(:authorize_resource).and_call_original
       allow(controller).to receive(:contextualize_resource).and_call_original
@@ -156,8 +155,7 @@ RSpec.describe Admin::ApplicationController, type: :controller do
       it "passes all necessary authorization methods" do
         get :index, params: {}
         expect(controller).not_to have_received(:find_resource)
-        expect(controller).to have_received(:authorize_scope)
-        expect(controller).to have_received(:scoped_resource)
+        expect(controller).to have_received(:scoped_resource).exactly(2).times
         expect(controller).to have_received(:authorize_resource)
         expect(controller).not_to have_received(:contextualize_resource)
       end
@@ -167,7 +165,6 @@ RSpec.describe Admin::ApplicationController, type: :controller do
       it "passes all necessary authorization methods" do
         get :new, params: {}
         expect(controller).not_to have_received(:find_resource)
-        expect(controller).not_to have_received(:authorize_scope)
         expect(controller).not_to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
@@ -179,7 +176,6 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         params = attributes_for(:order)
         post :create, params: {order: params}
         expect(controller).not_to have_received(:find_resource)
-        expect(controller).not_to have_received(:authorize_scope)
         expect(controller).not_to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
@@ -191,7 +187,6 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         order = create(:order)
         get :show, params: {id: order.to_param}
         expect(controller).to have_received(:find_resource)
-        expect(controller).to have_received(:authorize_scope)
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
@@ -203,7 +198,6 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         order = create(:order)
         get :edit, params: {id: order.to_param}
         expect(controller).to have_received(:find_resource)
-        expect(controller).to have_received(:authorize_scope)
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
@@ -215,7 +209,6 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         order = create(:order)
         put :update, params: {id: order.to_param, order: {address_zip: "666"}}
         expect(controller).to have_received(:find_resource)
-        expect(controller).to have_received(:authorize_scope)
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
@@ -227,7 +220,6 @@ RSpec.describe Admin::ApplicationController, type: :controller do
         order = create(:order)
         delete :destroy, params: {id: order.to_param}
         expect(controller).to have_received(:find_resource)
-        expect(controller).to have_received(:authorize_scope)
         expect(controller).to have_received(:scoped_resource)
         expect(controller).to have_received(:authorize_resource)
         expect(controller).to have_received(:contextualize_resource)
