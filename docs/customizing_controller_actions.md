@@ -27,7 +27,15 @@ class Admin::FoosController < Admin::ApplicationController
   # This will be used to set the resource for the `show`, `edit`, `update` and `destroy` actions.
   #
   # def find_resource(param)
-  #   Foo.find_by!(slug: param)
+  #   authorize_scope(scoped_resource).find_by!(slug: param)
+  # end
+
+  # Override this if you want to authorize the scope.
+  # This will be used in all actions except for the `new` and `create` actions.
+  #
+  # def authorize_scope(scope)
+  #   namespaced_scope = policy_namespace + [scope]
+  #   policy_scope!(pundit_user, namespaced_scope)
   # end
 
   # Override this if you have certain roles that require a subset.
