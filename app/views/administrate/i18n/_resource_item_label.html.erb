@@ -1,0 +1,8 @@
+<%# locals: (page:, resource_class:, resource_name:, attribute:) %>
+
+<span style="text-transform: uppercase;">
+<%= t(
+  "helpers.label.#{resource_name}.#{attribute.name}",
+  default: page.resource.class.human_attribute_name(attribute.name),
+) %>
+</span>

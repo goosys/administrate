@@ -15,6 +15,8 @@ Bundler.require(*Rails.groups)
 module AdministratePrototype
   class Application < Rails::Application
     config.i18n.enforce_available_locales = true
+    config.i18n.available_locales = [:en,:ja]
+    config.i18n.default_locale = :ja
 
     config.generators do |generate|
       generate.helper false

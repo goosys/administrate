@@ -35,10 +35,7 @@ to display a collection of resources in an HTML table.
             <%= link_to(params: sanitized_order_params(page, collection_field_name).merge(
               collection_presenter.order_params_for(attr_name, key: collection_field_name)
             )) do %>
-              <%= t(
-                "helpers.label.#{collection_presenter.resource_name}.#{attr_name}",
-                default: resource_class.human_attribute_name(attr_name).titleize,
-              ) %>
+              <%= render partial: "administrate/i18n/collection_item_label", locals: { page: page, resource_class: resource_class, resource_name: collection_presenter.resource_name, attribute: attr_name } %>
               <% if collection_presenter.ordered_by?(attr_name) %>
                 <span class="cell-label__sort-indicator cell-label__sort-indicator--<%= collection_presenter.ordered_html_class(attr_name) %>">
                   <svg aria-hidden="true">
@@ -48,10 +45,7 @@ to display a collection of resources in an HTML table.
               <% end %>
             <% end %>
           <% else %>
-            <%= t(
-              "helpers.label.#{collection_presenter.resource_name}.#{attr_name}",
-              default: resource_class.human_attribute_name(attr_name).titleize,
-            ) %>
+            <%= render partial: "administrate/i18n/collection_item_label", locals: { page: page, resource_class: resource_class, resource_name: collection_presenter.resource_name, attribute: attr_name } %>
           <% end %>
         </th>
       <% end %>

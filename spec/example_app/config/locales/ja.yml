@@ -1,0 +1,38 @@
+ja:
+  date:
+    formats:
+      default:
+        "%m/%d/%Y"
+      with_weekday:
+        "%a %m/%d/%y"
+
+  helpers:
+    label:
+      order:
+        address: Address
+        details: Details
+    submit:
+      customer:
+        create: "顧客情報を登録"
+        update: "顧客情報を更新"
+
+  time:
+    formats:
+      default:
+        "%a, %b %-d, %Y at %r"
+      date:
+        "%b %-d, %Y"
+      short:
+        "%B %d"
+
+  titles:
+    application: Administrate-prototype
+
+  activerecord:
+    models:
+      customer: 顧客
+
+  attributes:
+    id: ID
+    created_at: 作成日
+    updated_at: 更新日

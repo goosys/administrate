@@ -16,10 +16,7 @@ to do the heavy lifting.
 %>
 
 <% content_for(:title) do %>
-  <%= t(
-    "administrate.actions.new_resource",
-    name: display_resource_name(page.resource_name, singular: true)
-  ) %>
+  <%= render partial: "administrate/i18n/new_resource_title", locals: { page: page, resource_class: resource_class, resource_name: resource_name } %>
 <% end %>
 
 <header class="main-content__header">

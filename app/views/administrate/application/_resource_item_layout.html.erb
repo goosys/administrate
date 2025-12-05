@@ -1,8 +1,5 @@
 <dt class="attribute-label" id="<%= attribute.name %>">
-  <%= t(
-    "helpers.label.#{resource_name}.#{attribute.name}",
-    default: page.resource.class.human_attribute_name(attribute.name),
-  ) %>
+  <%= render partial: "administrate/i18n/resource_item_label", locals: { page: page, resource_class: resource_class, resource_name: resource_name, attribute: attribute } %>
 </dt>
 
 <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
