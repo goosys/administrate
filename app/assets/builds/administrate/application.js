@@ -22018,9 +22018,10 @@
         this.selectize = (0, import_jquery2.default)(this.element).selectize(options)[0].selectize;
         this.selectize.setValue(selectedValues);
         if (this.element.getAttribute("data-selectize-required") === "true") {
-          this.selectize.on("change", (value) => {
-            if (value.length === 0) {
-              this.selectize.setValue(selectedValues);
+          this.selectize.on("dropdown_close", (dropdown) => {
+            const items = this.selectize.items;
+            if (items.length === 0) {
+              this.selectize.addItem(this.selectize.lastValidValue, true);
             }
           });
         }
