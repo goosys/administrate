@@ -108,7 +108,12 @@ module Administrate
       end
 
       def candidate_resources
-        scope = options[:scope] ? options[:scope].call(self) : associated_class.all
+        scope = options[:scope]
+        scope = if scope
+          scope.arity.positive? ? scope.call(self) : scope.call
+        else
+          associated_class.all
+        end
         scope = scope.includes(options.fetch(:includes, []))
 
         order = options[:order]

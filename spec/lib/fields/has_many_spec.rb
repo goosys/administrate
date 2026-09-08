@@ -301,6 +301,19 @@ describe Administrate::Field::HasMany do
 
         expect(resources).to eq ["customer-3", "customer-2"]
       end
+
+      it "returns the resources from a scope without arguments" do
+        order = build(:order)
+
+        1.upto(3) { |i| create :customer, name: "customer-#{i}" }
+        scope = -> { Customer.order(name: :desc).limit(2) }
+
+        association = Administrate::Field::HasMany.with_options(scope: scope)
+        field = association.new(:customer, [], :show, resource: order)
+        resources = field.associated_resource_options.compact.to_h.keys
+
+        expect(resources).to eq ["customer-3", "customer-2"]
+      end
     end
   end
 end
