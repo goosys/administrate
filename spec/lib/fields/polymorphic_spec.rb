@@ -50,6 +50,7 @@ describe Administrate::Field::Polymorphic do
         def display_resource(*)
           :success
         end
+        attr_accessor :context
       end
 
       field = Administrate::Field::Polymorphic.new(:foo, Thing.new, :show)
@@ -96,6 +97,13 @@ describe Administrate::Field::Polymorphic do
 
     context "present in options as a call-able object" do
       it "returns the called value" do
+        classes = ->(field) { ["one", "two", "three"] }
+        allow(field).to receive(:options).and_return(classes: classes)
+
+        expect(field.send(:classes)).to eq(classes.call(field))
+      end
+
+      it "calls a callable without arguments" do
         classes = -> { ["one", "two", "three"] }
         allow(field).to receive(:options).and_return(classes: classes)
 

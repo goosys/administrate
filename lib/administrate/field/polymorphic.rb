@@ -26,12 +26,18 @@ module Administrate
       private
 
       def associated_dashboard(klass = data.class)
-        "#{klass.name}Dashboard".constantize.new
+        "#{klass.name}Dashboard".constantize.new.tap do |d|
+          d.context = context
+        end
       end
 
       def classes
         klasses = options.fetch(:classes, [])
-        klasses.respond_to?(:call) ? klasses.call : klasses
+        if klasses.respond_to?(:call)
+          klasses.arity.positive? ? klasses.call(self) : klasses.call
+        else
+          klasses
+        end
       end
 
       private
