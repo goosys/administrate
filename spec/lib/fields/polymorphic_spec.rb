@@ -102,6 +102,13 @@ describe Administrate::Field::Polymorphic do
 
         expect(field.send(:classes)).to eq(classes.call(field))
       end
+
+      it "calls a callable without arguments" do
+        classes = -> { ["one", "two", "three"] }
+        allow(field).to receive(:options).and_return(classes: classes)
+
+        expect(field.send(:classes)).to eq(classes.call)
+      end
     end
   end
 

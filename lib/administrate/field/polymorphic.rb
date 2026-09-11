@@ -33,7 +33,11 @@ module Administrate
 
       def classes
         klasses = options.fetch(:classes, [])
-        klasses.respond_to?(:call) ? klasses.call(self) : klasses
+        if klasses.respond_to?(:call)
+          klasses.arity.positive? ? klasses.call(self) : klasses.call
+        else
+          klasses
+        end
       end
 
       private
